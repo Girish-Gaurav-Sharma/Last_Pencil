@@ -1,0 +1,80 @@
+import random
+player_1 = "John"
+player_2 = "Jack"
+choice = ['1', '2', '3']
+pencil = input("How many pencils would you like to use:\n")
+while not pencil.isdigit() or int(pencil) == 0:
+    if not pencil.isdigit():
+        print('The number of pencils should be numeric')
+    else:
+        print('The number of pencils should be positive')
+    pencil = input()
+    
+first = input(f"Who will be the first ({player_1}, {player_2}):\n")
+while first != player_1 and first != player_2:
+    print(f'Choose between {player_1} and {player_2}')
+    first = input()
+
+
+print("|" * int(pencil))
+if first == player_1:
+    x = input(f"{first}'s turn:\n")
+    while x != '1' and x != '2' and x != '3'or int(x) > int(pencil):
+        if x != '1' and x != '2' and x != '3':
+            print("Possible values: '1', '2' or '3'")
+        else:
+            print("Too many pencils were taken")
+        x = input()
+  
+else:
+    print("Jack's turn:")
+    if (int(pencil) - 5) % 4 == 0:
+        x = random.choice(choice)
+        print(x)
+    else:
+        if (int(pencil) - 4) % 4 == 0:
+            x = "3"
+        elif (int(pencil) - 3) % 4 == 0:
+            x = '2'
+        else:
+            x = '1'
+        print(x)
+        
+pencil_left = int(pencil) - int(x)
+print("|" * (pencil_left))
+if first == player_1:
+    turn = player_2
+else:
+    turn = player_1
+while pencil_left > 0:
+    if turn == player_1:
+        y = input(f"{turn}'s turn:\n")
+        while y != '1' and y != '2' and y != '3':
+            print("Possible values: '1', '2' or '3'")
+            y = input()
+        while int(y) > pencil_left:
+            print("Too many pencils were taken")
+            y = input()
+    else:
+        print(f"{turn}'s turn:")
+        if (pencil_left - 5) >= 0 and (pencil_left - 5) % 4 == 0:
+            y = random.choice(choice)
+            print(y)
+        else:
+            if (pencil_left - 4) >= 0 and (pencil_left - 4) % 4 == 0:
+                y = "3"
+            elif (pencil_left - 3) >= 0 and (pencil_left - 3) % 4 == 0:
+                y = '2'
+            else:
+                y = '1'
+            print(y)
+    if turn == player_2:
+        turn = player_1
+    else:
+        turn = player_2
+
+    pencil_left = pencil_left - int(y)
+    print("|" * (pencil_left))
+
+
+print(f'{turn} won!')
